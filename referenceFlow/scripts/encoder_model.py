@@ -381,6 +381,7 @@ class Encoder:
         self.branches += 1
         self.branch_map.append("0" if is_taken else "1")
         debug_print("%d: branch total %d" % (self.i_count, self.branches))
+        debug_print("%d: branch_map %x" % (self.i_count, int("".join(self.branch_map), 2)))
         assert self.branches <= self.MAX_BRANCHES
         assert len(self.branch_map) <= self.MAX_BRANCHES
 
@@ -512,6 +513,7 @@ class Encoder:
 
         debug_print("---------------------Start of send_te_inst---------------------")
         self.branches = 0
+        local_branch_map = self.branch_map
         self.branch_map = []
         self.resync_count += 1
         # Check that no extra fields have been added as it's just a dict
@@ -554,6 +556,8 @@ class Encoder:
                         te_inst_list.append("%s=%s" % (key, format_t(value).name))
                     elif key == "subformat":
                         te_inst_list.append("%s=%s" % (key, sync_t(value).name))
+                    elif key == "branch_map":
+                        te_inst_list.append("%s=%s" % (key, "{0:08x}".format(int("".join(local_branch_map), 2))))
                     else:
                         te_inst_list.append("%s=%s" % (key, value))
             flag_info = ", Reason[%s]" % ", ".join(reasons) if len(reasons) else ""
@@ -651,6 +655,7 @@ class Encoder:
             has_address = True
             if self.te_inst["format"] == format_t.BRANCH:
                 self.raw.add_bits("branches", 5)
+                debug_print("%d: branch_map_bits %d" % (self.i_count, self.te_inst["branches"]))
                 branch_bits, has_address = branch_map_bits(self.te_inst["branches"])
                 self.raw.add_bits("branch_map", branch_bits)
             bit_end = len(self.raw)
