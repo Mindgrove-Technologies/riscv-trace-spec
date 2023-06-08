@@ -58,8 +58,8 @@ encoder_inst_port_required = [
     "tval",
     "priv",
     "iaddr_0",
-    "context",
-    "ctype",
+    #"context",
+    #"ctype",
     "iretire_0",
     "ilastsize_0",
 ]

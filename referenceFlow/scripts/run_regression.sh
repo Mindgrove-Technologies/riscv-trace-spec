@@ -429,10 +429,10 @@ function run_instruction_suite() {
 
     # Only a single SCF for each word size because it represents the hardware
     static_config_64=$suite_dir/hardware_64.scf
-    SCF[iaddress_width_p]=64
+    SCF[iaddress_width_p]=39
     create_scf $static_config_64
     static_config_32=$suite_dir/hardware_32.scf
-    SCF[iaddress_width_p]=32
+    SCF[iaddress_width_p]=39
     create_scf $static_config_32
 
     # Run spike to produce INSTRUCTION TRACE
