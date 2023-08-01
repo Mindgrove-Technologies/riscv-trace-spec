@@ -1,1 +1,4 @@
 vc.tex
+referenceFlow/build_te
+referenceFlow/scripts/common/__pycache__
+*.swp
