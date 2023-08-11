@@ -557,7 +557,7 @@ class Encoder:
                     elif key == "subformat":
                         te_inst_list.append("%s=%s" % (key, sync_t(value).name))
                     elif key == "branch_map":
-                        te_inst_list.append("%s=%s" % (key, "{0:08x}".format(int("".join(local_branch_map), 2))))
+                        te_inst_list.append("%s=%s" % (key, hex(int("{:<031b}".format(int("".join(local_branch_map), 2)), 2)).replace('0x', '')))
                     else:
                         te_inst_list.append("%s=%s" % (key, value))
             flag_info = ", Reason[%s]" % ", ".join(reasons) if len(reasons) else ""
